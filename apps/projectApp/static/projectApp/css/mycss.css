@@ -1,0 +1,55 @@
+body {
+    overflow: hidden;
+    
+}
+
+span {
+    color: #fff;
+}
+
+h1 {
+    color: #fff;
+}
+
+h6{
+    color: #fff;
+}
+
+.container {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 99;
+    top: 0;
+    left: 0;
+}
+
+.registerContainer {
+    display: inline-block;
+    margin: 0px 0px 0px 100px;
+}
+
+.loginContainer {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0px 0px 0px 160px;
+}
+
+.landingPageRegisterBtn {
+    margin: 25px 0px 0px 82px;
+}
+
+.landingPageLoginBtn {
+    margin: 25px 0px 0px 82px;
+}
+
+.title {
+    margin: 100px 0px 0px 100px;
+}
+
+input {
+    background-color: #fff;
+    border: none;
+    border-radius: 3px;
+}

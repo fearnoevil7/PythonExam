@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+    <head>
+    <title>Title</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'projectApp/css/mycss.css' %}"> 
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+        <script src="https://threejs.org/build/three.js" ></script>
+        <script>
+            let scene, camera, renderer, starGeo, stars;
+
+            function init() {
+                scene = new THREE.Scene();
+                camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight,1, 1000);
+                camera.position.z = 1;
+                camera.rotation.x = Math.PI/2;
+
+                renderer = new THREE.WebGLRenderer();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+
+                starGeo = new THREE.Geometry();
+                for(let i = 0; i < 6000; i++){
+                    star = new THREE.Vector3(
+                        Math.random() * 600 - 300,
+                        Math.random() * 600 - 300,
+                        Math.random() * 600 - 300
+                    );
+                    starGeo.vertices.push(star);
+                }
+                let sprite = new THREE.TextureLoader().load("{% static 'projectApp/images/star.png' %}");
+                let starMaterial = new THREE.PointsMaterial({
+                    color: 0xaaaaaa,
+                    size: 0.7,
+                    map: sprite
+                });
+
+                stars = new THREE.Points(starGeo, starMaterial);
+                scene.add(stars);
+                animate();
+            }
+            function animate() {
+                renderer.render(scene, camera);
+                requestAnimationFrame(animate);
+            }
+            init();
+        </script>
+        <div class="container" >
+            <h1 class="title">Python Exam!</h1>
+            {% if messages %}
+            <ul class="messages">    
+                {% for message in messages %}    
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <div style="margin: 70px 0px 0px 0px;" >
+                <div class="registerContainer">
+                    <form action="/register" method="POST">
+                        {%csrf_token%}
+                        <h6 style="margin: 0px 0px 16px 85px;" >Register</h6>
+                        <span>Name: </span><input type="text" name="name" class="intro" style="margin: 7px 0px 0px 32px;" >
+                        <br>
+                        <span>Username: </span><input type="text" name="username" style="margin: 7px;" >
+                        <br>
+                        <span>Password: </span><input type="password" name="password" style="margin: 7px 0px 0px 4px;" >
+                        <br>
+                        <span>Confirmation: </span><input type="password" name="confirmation" class="intro" style="margin: 7px 19px 0px 0px;" >
+                        <br>
+                        <input class="btn btn-warning landingPageRegisterBtn" type="submit" value="Register">
+                    </form>
+                    </div>
+                <div class="loginContainer">
+                    <h6 style="margin: 0px 0px 16px 79px;" >Login</h6>
+                    <form action="/login" method="POST">
+                        {%csrf_token%}
+                        <span>Username: </span><input type="text" name="username">
+                        <br>
+                        <span>Password: </span><input type="password" name="password" style="margin: 7px 0px 0px 5px;" >
+                        <br>
+                        <input class="btn btn-danger landingPageLoginBtn" type="submit" value="Login">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</html>
